@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbeiro Vini</title>
+<style>
+body { margin:0; padding:0; font-family:Arial; background:#000; color:#fff; }
+h1 { text-align:center; color:#ff0000; }
+.container { padding:20px; }
+button { background:#ff0000; color:#fff; border:none; padding:10px; margin-top:5px; cursor:pointer; width:100%; }
+.cliente { padding:10px; border-bottom:1px solid #333; margin-bottom:10px; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Barbeiro Vini</h1>
+<div id="fila"></div>
+</div>
+
+<script>
+let fila = [];
+
+function atualizarFila() {
+  const div = document.getElementById('fila');
+  div.innerHTML = '';
+  fila.filter(c=>c.barbeiro=="Vini" || c.barbeiro=="Tanto faz").forEach((c,i)=>{
+    const d = document.createElement('div');
+    d.className='cliente';
+    d.innerHTML=`${i+1}. ${c.nome} - ${c.servico}
+      <br><button onclick="finalizar(${i})">Finalizar</button>
+      <button onclick="adicionar(${i})">Adicionar serviço</button>`;
+    div.appendChild(d);
+  });
+}
+
+function finalizar(i){ fila.splice(i,1); atualizarFila(); }
+function adicionar(i){
+  const serv = prompt("Qual serviço adicionar?","Barba");
+  if(serv){ fila[i].servico+=" + "+serv; atualizarFila(); }
+}
+
+setInterval(atualizarFila,1000);
+</script>
+</body>
+</html>
